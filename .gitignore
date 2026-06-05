@@ -1,0 +1,14 @@
+node_modules
+.env
+.env.local
+dist
+cache
+artifacts
+typechain-types
+coverage
+.DS_Store
+
+frontend/node_modules
+frontend/dist
+frontend/.env
+frontend/.env.local
