@@ -2,20 +2,6 @@ import { ethers, network, run } from "hardhat";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-/**
- * Despliega el contrato Multisig en la red configurada (por defecto Sepolia).
- * Lee de .env:
- *   - SIGNERS: lista de direcciones separadas por coma
- *   - THRESHOLD: umbral de aprobaciones
- *
- * Si SIGNERS no está definido, usa el deployer como único signer (útil para pruebas locales).
- *
- * Tras desplegar:
- *   - Imprime la dirección del contrato
- *   - Guarda la dirección en deployments/<red>.json
- *   - Copia el ABI a frontend/src/abi/Multisig.json
- *   - Si está la API key de Etherscan, intenta verificar
- */
 async function main(): Promise<void> {
   const [deployer] = await ethers.getSigners();
   console.log(`Desplegando con la cuenta: ${deployer.address}`);
@@ -57,7 +43,8 @@ async function main(): Promise<void> {
 
   // Guardar la dirección
   const deploymentsDir = path.join(__dirname, "..", "deployments");
-  if (!fs.existsSync(deploymentsDir)) fs.mkdirSync(deploymentsDir, { recursive: true });
+  if (!fs.existsSync(deploymentsDir))
+    fs.mkdirSync(deploymentsDir, { recursive: true });
   const deploymentPath = path.join(deploymentsDir, `${network.name}.json`);
   fs.writeFileSync(
     deploymentPath,
@@ -89,8 +76,12 @@ async function main(): Promise<void> {
       "Multisig.json",
     );
     const abiDestDir = path.join(__dirname, "..", "frontend", "src", "abi");
-    if (fs.existsSync(artifactPath) && fs.existsSync(path.dirname(abiDestDir))) {
-      if (!fs.existsSync(abiDestDir)) fs.mkdirSync(abiDestDir, { recursive: true });
+    if (
+      fs.existsSync(artifactPath) &&
+      fs.existsSync(path.dirname(abiDestDir))
+    ) {
+      if (!fs.existsSync(abiDestDir))
+        fs.mkdirSync(abiDestDir, { recursive: true });
       const artifact = JSON.parse(fs.readFileSync(artifactPath, "utf8")) as {
         abi: unknown;
       };
@@ -104,7 +95,7 @@ async function main(): Promise<void> {
     console.warn("No se pudo copiar el ABI al frontend:", err);
   }
 
-  // Verificación opcional en Etherscan
+  // Verificación en Etherscan
   if (
     network.name === "sepolia" &&
     process.env.ETHERSCAN_API_KEY &&

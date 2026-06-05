@@ -1,17 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.24;
 
-/**
- * @title Multisig
- * @notice Contrato de billetera multifirma con conjunto de firmantes fijo en el despliegue.
- *         Una propuesta se fondea al crearla (msg.value) y los fondos quedan custodiados
- *         por el contrato hasta que se ejecuta (se envían al destino) o se cancela
- *         (se reembolsan al proponente).
- */
 contract Multisig {
-    // ---------------------------------------------------------------------
-    // Estructuras y estado
-    // ---------------------------------------------------------------------
 
     struct Transaccion {
         address owner;
@@ -27,10 +17,6 @@ contract Multisig {
     uint256 private threshold;
     Transaccion[] private transaccionesPendientes;
 
-    // ---------------------------------------------------------------------
-    // Errores
-    // ---------------------------------------------------------------------
-
     error TransaccionFallida();
     error FirmasInsuficientes();
     error SignerNoAprobado();
@@ -41,10 +27,6 @@ contract Multisig {
     error ListaDeSignersInvalida();
     error SignerDuplicado();
     error IndiceFueraDeRango();
-
-    // ---------------------------------------------------------------------
-    // Eventos
-    // ---------------------------------------------------------------------
 
     event PropuestaCreada(
         uint256 indexed id,
@@ -61,10 +43,6 @@ contract Multisig {
     event PropuestaEjecutada(uint256 indexed id, address indexed ejecutor);
     event PropuestaCancelada(uint256 indexed id, address indexed owner);
 
-    // ---------------------------------------------------------------------
-    // Constructor
-    // ---------------------------------------------------------------------
-
     constructor(address[] memory addresses, uint256 value) {
         if (addresses.length == 0) revert ListaDeSignersInvalida();
         if (value == 0 || value > addresses.length) revert ThresholdInvalido();
@@ -79,10 +57,6 @@ contract Multisig {
 
         threshold = value;
     }
-
-    // ---------------------------------------------------------------------
-    // Acciones principales
-    // ---------------------------------------------------------------------
 
     function Propuesta(address destino, bytes calldata data)
         external
@@ -150,10 +124,6 @@ contract Multisig {
         emit PropuestaCancelada(transaccionPos, trs.owner);
     }
 
-    // ---------------------------------------------------------------------
-    // Getters / vistas
-    // ---------------------------------------------------------------------
-
     function getTransacciones() external view returns (Transaccion[] memory) {
         return transaccionesPendientes;
     }
@@ -175,7 +145,6 @@ contract Multisig {
         return threshold;
     }
 
-    /// @notice Alias mantenido por compatibilidad con la versión original (typo)
     function getTreshold() external view returns (uint256) {
         return threshold;
     }
@@ -201,10 +170,6 @@ contract Multisig {
         return false;
     }
 
-    // ---------------------------------------------------------------------
-    // Helpers internos
-    // ---------------------------------------------------------------------
-
     function _esSigner(address cuenta) internal view returns (bool) {
         for (uint256 i = 0; i < ApprovedSigners.length; i++) {
             if (ApprovedSigners[i] == cuenta) return true;
@@ -212,9 +177,6 @@ contract Multisig {
         return false;
     }
 
-    // ---------------------------------------------------------------------
-    // Modifiers
-    // ---------------------------------------------------------------------
 
     modifier isApprovedSigner() {
         if (!_esSigner(msg.sender)) revert SignerNoAprobado();

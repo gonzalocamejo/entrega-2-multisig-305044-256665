@@ -1,4 +1,3 @@
-// Copia el ABI de artifacts a frontend/src/abi/Multisig.json
 const fs = require("node:fs");
 const path = require("node:path");
 
