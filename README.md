@@ -47,8 +47,8 @@ npm run dev
 
 ## La dirección del contrato desplegado en Sepolia, y las wallets con las cuáles interactuar
 
-- **Dirección del contrato:** `0x78041BB0975b603b578ca0b17f1d6E51bF6cB0b2`
-- **Etherscan:** https://sepolia.etherscan.io/address/0x78041BB0975b603b578ca0b17f1d6E51bF6cB0b2
+- **Dirección del contrato:** `0x0F63Ea8AF5f636f427A07EDBCef15ee03D5215DF`
+- **Etherscan:** https://sepolia.etherscan.io/address/0x0F63Ea8AF5f636f427A07EDBCef15ee03D5215DF
 - **Threshold:** `1 / 1`
 - **Wallets con las que se puede interactuar:**
   1. `0x8De85cAeC741B188808Eb0af1eB829029413325a`

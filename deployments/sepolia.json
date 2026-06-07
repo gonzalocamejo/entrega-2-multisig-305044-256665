@@ -2,11 +2,11 @@
   "red": "sepolia",
   "chainId": 11155111,
   "contrato": "Multisig",
-  "direccion": "0x78041BB0975b603b578ca0b17f1d6E51bF6cB0b2",
+  "direccion": "0x329c43eFD7B75bFE6f4D810580852d2DB160345D",
   "signers": [
     "0x8De85cAeC741B188808Eb0af1eB829029413325a"
   ],
   "threshold": "1",
   "deployer": "0x8De85cAeC741B188808Eb0af1eB829029413325a",
-  "timestamp": "2026-06-05T20:42:48.509Z"
+  "timestamp": "2026-06-07T17:03:25.700Z"
 }
